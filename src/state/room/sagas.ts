@@ -1,7 +1,8 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { fetchRoom } from './actions';
+import { Action } from 'redux';
 
-type SomeAction = { payload: { roomId: string } };
+type SomeAction = { payload: { roomId: string } } & Action;
 
 function* fetchRoomSaga(action: SomeAction): Generator {
   try {
