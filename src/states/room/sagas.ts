@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery, fork } from 'redux-saga/effects';
 import { fetchRoom } from '../../apis/room';
 import {
   ROOM_FETCH_FAILED,
@@ -12,10 +12,11 @@ type SomeAction = { payload: { roomId: string } } & Action;
 function* fetchRoomSaga(action: SomeAction): Generator {
   try {
     const { payload } = action;
-    const room = yield call(fetchRoom, payload.roomId);
-    yield put({ type: ROOM_FETCH_SUCCEEDED, room });
+    const rooms = yield call(fetchRoom, payload.roomId);
+    yield put({ type: ROOM_FETCH_SUCCEEDED, data: rooms });
   } catch (e) {
-    yield put({ type: ROOM_FETCH_FAILED, message: e.message });
+    yield put({ type: ROOM_FETCH_FAILED, error: e.message });
+    // throw e;
   }
 }
 
@@ -24,5 +25,5 @@ function* roomWatcher(): Generator {
 }
 
 export function* roomSaga(): Generator {
-  yield all([roomWatcher]);
+  yield all([fork(roomWatcher)]);
 }

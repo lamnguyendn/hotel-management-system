@@ -3,10 +3,7 @@ import Title from 'antd/lib/typography/Title';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import {
-  actions as roomActions,
-  selectors as roomSelector,
-} from '../../../states/room';
+import { actions as roomActions, selectors as roomSelector } from '../../../states/room';
 
 const columns = [
   {
@@ -31,6 +28,9 @@ export const ListContainer = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
   const rooms = useSelector(roomSelector.roomsSelector);
+  const rooms2 = useSelector(roomSelector.roomsSelector2);
+
+  console.log('room2: ', rooms2);
 
   useEffect(() => {
     dispatch(roomActions.fetchRoom(''));
@@ -54,9 +54,7 @@ export const ListContainer = (): JSX.Element => {
       </Row>
       <Row gutter={[40, 0]}>
         <Col span={24}>
-          {rooms && rooms.length > 0 && (
-            <Table columns={columns} dataSource={rooms} rowKey="id" />
-          )}
+          {rooms && rooms.length > 0 && <Table columns={columns} dataSource={rooms} rowKey="id" />}
         </Col>
       </Row>
     </div>

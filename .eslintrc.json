@@ -5,9 +5,11 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
+    "prettier/react"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,13 +19,72 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "react-hooks"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/parsers": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
+      }
+    }
+  },
   "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "endOfLine": "auto" }],
+    "arrow-parens": 0,
+    "curly": 2,
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "linebreak-style": ["error", "windows"],
+    "linebreak-style": 0,
+    "max-len": [
+      2,
+      100,
+      2,
+      { "ignoreTemplateLiterals": true, "ignoreStrings": true, "ignoreComments": true }
+    ],
+    "no-case-declarations": 1,
+    "no-console": 1,
+    "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+    "no-shadow": 0,
+    "no-underscore-dangle": 0,
+    "import/no-unresolved": 2,
+    "no-unused-vars": 1,
+    "no-useless-escape": 1,
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "react-hooks/rules-of-hooks": 1,
-    "react-hooks/exhaustive-deps": 1
+    "react-hooks/exhaustive-deps": 1,
+    "react/no-deprecated": 1,
+    "react/no-string-refs": 1,
+    "react/no-array-index-key": 1,
+    "react/jsx-inden-props": [2, 2],
+    "react/forbid-prop-types": 0,
+    "react/jsx-max-props-per-line": [0, { "maximum": 3 }],
+    "react/jsx-filename-extension": 0,
+    "react/no-did-update-set-state": 0,
+    "react/jsx-props-no-spreading": [
+      2,
+      {
+        "custom": "ignore",
+        "exceptions": ["input", "textarea"]
+      }
+    ],
+    "react/prop-types": 0,
+    "import/prefer-default-export": 0,
+    "import/export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/named": 0,
+    "import/imports-first": [2, "absolute-first"],
+    "import/newline-after-import": 2,
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
   }
 }

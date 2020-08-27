@@ -1,26 +1,29 @@
-import * as history from 'history';
-import { routerMiddleware, routerReducer } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
+import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
-import { rootSaga } from '.';
-import { roomReducers } from './room/reducers';
+import { rootReducer, rootSaga } from '.';
+
+export const history = createBrowserHistory();
 
 const sagaMiddleware = createSagaMiddleware();
 
 const configureStore = (initialState = {}): Store<any> => {
-  const middlewares = [
-    sagaMiddleware,
-    routerMiddleware(history.createBrowserHistory()),
-  ];
+  const middlewares = [routerMiddleware(history), sagaMiddleware];
 
   const store = createStore(
-    combineReducers({ ...roomReducers, router: routerReducer }),
+    rootReducer(),
     initialState,
     composeWithDevTools(applyMiddleware(...middlewares))
   );
 
-  sagaMiddleware.run(rootSaga);
+  // sagaMiddleware.run(rootSaga);
+  const sagaTask = sagaMiddleware.run(rootSaga).toPromise();
+  sagaTask.catch((e) => {
+    console.log('eeee:', e);
+  });
 
   return store;
 };

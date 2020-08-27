@@ -7,7 +7,7 @@ export const getInstanceAxios = (): AxiosInstance => {
     instance = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       timeout: 1000,
-      headers: { 'X-Custom-Header': 'foobar' },
+      headers: { 'Content-Type': 'application/json' },
     });
 
     // Add a request interceptor
@@ -27,7 +27,7 @@ export const getInstanceAxios = (): AxiosInstance => {
       function (response) {
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
-        return response;
+        return response.data;
       },
       function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger

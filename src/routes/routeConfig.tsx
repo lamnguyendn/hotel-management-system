@@ -1,13 +1,9 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout } from 'antd';
 import React, { Suspense, useEffect, useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { Redirect, Route, Router, Switch } from 'react-router-dom';
 import { SideBar } from '../components/layouts/SideBar';
+import { history } from './../states/store';
 import { LIST_PAGE_PATH } from './constants';
 import { privatePage } from './routeDefinition';
 
@@ -26,7 +22,7 @@ export const Routes = (): JSX.Element => {
   };
 
   return (
-    <Router>
+    <Router history={history}>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapse}>
           <SideBar />

@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 export const SideBarContainer = (): JSX.Element => {
   const history = useHistory();

@@ -13,5 +13,5 @@ export type RoomAction = {
 export type RoomState = {
   loading: boolean;
   error?: AppError;
-  payload?: Room[];
+  data?: Room[];
 };
