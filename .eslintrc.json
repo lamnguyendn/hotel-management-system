@@ -1,15 +1,19 @@
 {
   "env": {
     "browser": true,
-    "es2020": true
+    "es2020": true,
+    "jest": true
   },
   "extends": [
+    "airbnb",
+    "airbnb/hooks",
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "prettier/react"
+    "prettier/react",
+    "plugin:sonarjs/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,12 +23,15 @@
     "ecmaVersion": 11,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "prettier", "react-hooks"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "react-hooks", "sonarjs"],
   "settings": {
     "react": {
       "version": "detect"
     },
     "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx", ".d.ts"]
       }
@@ -57,10 +64,12 @@
     "react/no-deprecated": 1,
     "react/no-string-refs": 1,
     "react/no-array-index-key": 1,
-    "react/jsx-inden-props": [2, 2],
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-indent": [2, 2],
     "react/forbid-prop-types": 0,
     "react/jsx-max-props-per-line": [0, { "maximum": 3 }],
     "react/jsx-filename-extension": 0,
+    "react/require-default-props": 0,
     "react/no-did-update-set-state": 0,
     "react/jsx-props-no-spreading": [
       2,
@@ -85,6 +94,8 @@
         "ts": "never",
         "tsx": "never"
       }
-    ]
+    ],
+    "sonarjs/cognitive-complexity": "error",
+    "sonarjs/no-identical-expressions": "error"
   }
 }

@@ -1,27 +1,13 @@
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from '@ant-design/icons';
 import { Menu } from 'antd';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import { SideBarPresenterProps } from './types';
 
-export const SideBarContainer = (): JSX.Element => {
-  const history = useHistory();
-
-  const handleUserClick = () => {
-    history.push('/list');
-  };
-
-  const handleVideosClick = () => {
-    history.push('/videos');
-  };
-
-  const handleFileClick = () => {
-    history.push('/files');
-  };
-
+export const SideBarPresenter = ({
+  handleRoomClick,
+  handleVideosClick,
+  handleFileClick,
+}: SideBarPresenterProps): JSX.Element => {
   return (
     <div>
       <div
@@ -30,11 +16,11 @@ export const SideBarContainer = (): JSX.Element => {
           background: 'rgba(255, 255, 255, 0.2)',
           margin: '16px',
         }}
-      ></div>
+      />
       <Menu theme="dark">
-        <Menu.Item key="1" onClick={handleUserClick}>
+        <Menu.Item key="1" onClick={handleRoomClick}>
           <UserOutlined />
-          <span> Users</span>
+          <span> Rooms</span>
         </Menu.Item>
         <Menu.Item key="2" onClick={handleVideosClick}>
           <VideoCameraOutlined />

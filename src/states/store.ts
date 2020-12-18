@@ -1,29 +1,25 @@
-import { connectRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
-import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
+import { applyMiddleware, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
 import { rootReducer, rootSaga } from '.';
+import { GlobalState } from './types';
 
 export const history = createBrowserHistory();
 
 const sagaMiddleware = createSagaMiddleware();
 
-const configureStore = (initialState = {}): Store<any> => {
+const configureStore = (initialState: GlobalState = {}): Store<GlobalState> => {
   const middlewares = [routerMiddleware(history), sagaMiddleware];
 
   const store = createStore(
-    rootReducer(),
+    rootReducer(history),
     initialState,
     composeWithDevTools(applyMiddleware(...middlewares))
   );
 
-  // sagaMiddleware.run(rootSaga);
-  const sagaTask = sagaMiddleware.run(rootSaga).toPromise();
-  sagaTask.catch((e) => {
-    console.log('eeee:', e);
-  });
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };

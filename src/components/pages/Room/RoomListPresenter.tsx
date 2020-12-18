@@ -1,9 +1,7 @@
 import { Button, Col, Row, Table } from 'antd';
 import Title from 'antd/lib/typography/Title';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { actions as roomActions, selectors as roomSelector } from '../../../states/room';
+import React from 'react';
+import { RoomListPresenterProps } from './types';
 
 const columns = [
   {
@@ -24,22 +22,7 @@ const columns = [
   },
 ];
 
-export const ListContainer = (): JSX.Element => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const rooms = useSelector(roomSelector.roomsSelector);
-  const rooms2 = useSelector(roomSelector.roomsSelector2);
-
-  console.log('room2: ', rooms2);
-
-  useEffect(() => {
-    dispatch(roomActions.fetchRoom(''));
-  }, []);
-
-  const handleClick = () => {
-    history.push('/form');
-  };
-
+export const RoomListPresenter = ({ handleClick, rooms }: RoomListPresenterProps): JSX.Element => {
   return (
     <div>
       <Row gutter={[40, 0]}>

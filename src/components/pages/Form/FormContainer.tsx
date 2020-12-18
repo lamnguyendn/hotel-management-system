@@ -1,15 +1,4 @@
-import {
-  Col,
-  Form,
-  Input,
-  message,
-  Row,
-  Radio,
-  Select,
-  Slider,
-  Switch,
-  Button,
-} from 'antd';
+import { Col, Form, Input, message, Row, Radio, Select, Slider, Switch, Button } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import axios from 'axios';
 import React, { useState } from 'react';
@@ -114,23 +103,14 @@ export const FormContainer = (): JSX.Element => {
             <Form.Item name="review" label="Review">
               <Slider />
             </Form.Item>
-            <Form.Item
-              name="notificaiton"
-              label="Notificaiton"
-              valuePropName="checked"
-            >
+            <Form.Item name="notificaiton" label="Notificaiton" valuePropName="checked">
               <Switch />
             </Form.Item>
             <div style={{ textAlign: 'right' }}>
               <Button type="primary" loading={loading} htmlType="submit">
                 Save
               </Button>{' '}
-              <Button
-                type="primary"
-                danger
-                htmlType="button"
-                onClick={() => history.push('/list')}
-              >
+              <Button type="primary" danger htmlType="button" onClick={() => history.push('/list')}>
                 Back
               </Button>
             </div>
