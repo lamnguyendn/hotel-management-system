@@ -17,7 +17,7 @@
     "@types/redux-actions": "^2.6.1",
     "@types/yup": "^0.29.9",
     "antd": "^4.5.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "connected-react-router": "^6.8.0",
     "immutability-helper": "^3.1.1",
     "lodash": "^4.17.20",
