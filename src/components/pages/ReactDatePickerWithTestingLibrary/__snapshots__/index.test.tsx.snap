@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MyComponent/> should allow me to enter text into the text box 1`] = `
+<div>
+  <div
+    class="App"
+  >
+    <label
+      for="from"
+    >
+      From:
+    </label>
+    <div
+      class="react-datepicker-wrapper"
+    >
+      <div
+        class="react-datepicker__input-container"
+      >
+        <input
+          class=""
+          id="date-picker"
+          type="text"
+          value="2021/01/18"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

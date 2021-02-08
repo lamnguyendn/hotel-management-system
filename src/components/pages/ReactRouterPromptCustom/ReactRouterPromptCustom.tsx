@@ -1,65 +1,115 @@
-import { Location } from 'history';
-import React, { useEffect, useState } from 'react';
-import { Prompt } from 'react-router-dom';
-// import WarningDialog from './WarningDialog';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useCallback, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { Link, Prompt } from 'react-router-dom';
+import './index.scss';
 
-const WarningDialog = (props: any) => {
-  return <></>;
+const modalRoot = document.getElementsByTagName('body')[0];
+
+const Modal = ({
+  setOpen,
+  allowTransitionCallback,
+}: {
+  setOpen: (value: React.SetStateAction<boolean>) => void;
+  allowTransitionCallback: any;
+}): JSX.Element => {
+  return ReactDOM.createPortal(
+    <div id="myModal" className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={() => setOpen(false)}>
+          &times;
+        </span>
+        <p>Some text in the Modal..</p>
+        <button
+          type="button"
+          onClick={() => allowTransitionCallback && allowTransitionCallback(true)}
+        >
+          Redirect...
+        </button>
+      </div>
+    </div>,
+    modalRoot
+  );
 };
 
-type Props = {
-  when?: boolean;
-  navigate: (path: string) => void;
-  shouldBlockNavigation: (location: Location) => boolean;
-};
+const __trigger: symbol = Symbol.for('__PreventTransitionPrompt_123');
 
-export const ReactRouterPromptCustom = ({
-  when,
-  navigate,
-  shouldBlockNavigation,
-}: Props): JSX.Element => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [lastLocation, setLastLocation] = useState<Location | null>(null);
-  const [confirmedNavigation, setConfirmedNavigation] = useState(false);
+const PreventTransitionPrompt = (props: {
+  when: boolean;
+  setOpen: (value: React.SetStateAction<boolean>) => void;
+}) => {
+  const { when, setOpen } = props;
 
-  const closeModal = () => {
-    setModalVisible(false);
-  };
+  const [allowTransitionCallback, setAllowTransitionCallback] = useState<any>(null);
 
-  const handleBlockedNavigation = (nextLocation: Location): boolean => {
-    if (!confirmedNavigation && shouldBlockNavigation(nextLocation)) {
-      setModalVisible(true);
-      setLastLocation(nextLocation);
-      return false;
-    }
-    return true;
-  };
-
-  const handleConfirmNavigationClick = () => {
-    setModalVisible(false);
-    setConfirmedNavigation(true);
-  };
+  const show = useCallback((cb) => {
+    setAllowTransitionCallback(() => cb);
+  }, []);
 
   useEffect(() => {
-    if (confirmedNavigation && lastLocation) {
-      // Navigate to the previous blocked location with your navigate function
-      navigate(lastLocation.pathname);
+    window[(__trigger as unknown) as number] = show as any;
+    return () => {
+      delete window[(__trigger as unknown) as number];
+    };
+  }, [show]);
+
+  useEffect(() => {
+    if (when && allowTransitionCallback) {
+      (allowTransitionCallback as any)(false);
     }
-  }, [confirmedNavigation, lastLocation, navigate]);
+  }, [allowTransitionCallback, when]);
+
+  const handleTransition = useCallback(() => {
+    return Symbol.keyFor(__trigger);
+  }, []);
 
   return (
     <>
-      <Prompt when={when} message={handleBlockedNavigation} />
-      {/* Your own alert/dialog/modal component */}
-      <WarningDialog
-        open={modalVisible}
-        titleText="Close without saving?"
-        contentText="You have unsaved changes. Are you sure you want to leave this page without saving?"
-        cancelButtonText="DISMISS"
-        confirmButtonText="CONFIRM"
-        onCancel={closeModal}
-        onConfirm={handleConfirmNavigationClick}
+      <Prompt when={when} message={handleTransition as any} />
+      {when && <Modal setOpen={setOpen} allowTransitionCallback={allowTransitionCallback} />}
+    </>
+  );
+};
+
+const Form = () => {
+  const [isChanged, setChanged] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const clickOutSide = useCallback(
+    (event) => {
+      const { target } = event;
+      const ariaLabel = (target as any).getAttribute('aria-label');
+      if (ariaLabel === 'Link' && isChanged) {
+        setOpen(true);
+      }
+      // event.preventDefault();
+    },
+    [isChanged]
+  );
+
+  useEffect(() => {
+    window.addEventListener('click', clickOutSide, true);
+    return () => {
+      window.removeEventListener('click', clickOutSide, true);
+    };
+  }, [clickOutSide]);
+
+  return (
+    <>
+      <PreventTransitionPrompt when={open} setOpen={setOpen} />
+      <Link to="/test1" aria-label="Link">
+        Test 1
+      </Link>
+      <br />
+      <input
+        placeholder="type something to block transitions"
+        onChange={() => {
+          setChanged(true);
+        }}
       />
     </>
   );
 };
+
+export const ReactRouterPromptCustom = (): JSX.Element => <Form />;

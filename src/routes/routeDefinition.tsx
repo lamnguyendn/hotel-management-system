@@ -1,12 +1,15 @@
 import { lazy } from 'react';
 import {
+  ENZYME_WITH_FILE_INPUT_PAGE_PATH,
   FILE_PAGE_PATH,
   FORM_PAGE_PATH,
   IMMUTABILITY_HELPER_PAGE_PATH,
   LIST_PAGE_PATH,
+  REACT_DATE_PICKER_WITH_TESTING_LIBRARY_PAGE_PATH,
   REACT_HOOK_FORM_PAGE_PATH,
   REACT_HOOK_FORM_TEST_INPUT_FILE_PAGE_PATH,
   REACT_HOOK_FORM_YUP_PAGE_PATH,
+  REACT_ROUTER_PROMPT_CUSTOM_PAGE_PATH,
   VIDEO_PAGE_PATH,
 } from './constants';
 
@@ -75,6 +78,34 @@ export const privatePage = [
       import('../components/pages/ReactHookFormTestInputFile').then(
         ({ ReactHookFormTestInputFilePage }) => ({
           default: ReactHookFormTestInputFilePage,
+        })
+      )
+    ),
+  },
+  {
+    path: REACT_ROUTER_PROMPT_CUSTOM_PAGE_PATH,
+    component: lazy(() =>
+      import('../components/pages/ReactRouterPromptCustom').then(
+        ({ ReactRouterPromptCustomPage }) => ({
+          default: ReactRouterPromptCustomPage,
+        })
+      )
+    ),
+  },
+  {
+    path: ENZYME_WITH_FILE_INPUT_PAGE_PATH,
+    component: lazy(() =>
+      import('../components/pages/EnzymeWithFileInput').then(({ EnzymeWithFileInputPage }) => ({
+        default: EnzymeWithFileInputPage,
+      }))
+    ),
+  },
+  {
+    path: REACT_DATE_PICKER_WITH_TESTING_LIBRARY_PAGE_PATH,
+    component: lazy(() =>
+      import('../components/pages/ReactDatePickerWithTestingLibrary').then(
+        ({ ReactDatePickerWithTestingLibraryPage }) => ({
+          default: ReactDatePickerWithTestingLibraryPage,
         })
       )
     ),

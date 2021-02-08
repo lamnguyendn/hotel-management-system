@@ -79,6 +79,7 @@
       }
     ],
     "react/prop-types": 0,
+    "react/display-name": [0, { "ignoreTranspilerName": false }],
     "import/prefer-default-export": 0,
     "import/export": 0,
     "import/no-extraneous-dependencies": 0,
@@ -96,6 +97,7 @@
       }
     ],
     "sonarjs/cognitive-complexity": "error",
-    "sonarjs/no-identical-expressions": "error"
+    "sonarjs/no-identical-expressions": "error",
+    "jsx-a11y/label-has-associated-control": 0
   }
 }

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
 import update from 'immutability-helper';
+import React, { useEffect } from 'react';
 
 const DELIMITER_COMPONENT = '__';
 const DELIMITER_SEQUENCE = '--';

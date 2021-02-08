@@ -6,7 +6,16 @@ import createSagaMiddleware from 'redux-saga';
 import { rootReducer, rootSaga } from '.';
 import { GlobalState } from './types';
 
-export const history = createBrowserHistory();
+export const getUserConfirmation = (dialogKey: string, callback: any): void => {
+  const dialogTrigger = window[(Symbol.for(dialogKey) as unknown) as number];
+  if (dialogTrigger) {
+    (dialogTrigger as any)(callback);
+    return;
+  }
+  callback(true);
+};
+
+export const history = createBrowserHistory({ getUserConfirmation });
 
 const sagaMiddleware = createSagaMiddleware();
 
